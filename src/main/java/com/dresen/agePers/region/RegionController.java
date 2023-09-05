@@ -13,7 +13,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/region")
+@RequestMapping("/regions")
 public class RegionController {
 
     private final RegionService service;
@@ -35,7 +35,7 @@ public class RegionController {
         return ResponseEntity.ok(regions);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<RegionDto> getRegionById(@PathVariable Long id) {
 
         RegionDto region = service.getRegionById(id);
@@ -43,14 +43,14 @@ public class RegionController {
         return ResponseEntity.ok(region);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<RegionDto> updateRegion(@PathVariable Long id, @RequestBody RegionDto toUpdate) {
 
         RegionDto region = service.updateRegion(id, toUpdate);
         return ResponseEntity.ok(region);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteRegion(Long id) {
 
         service.deleteRegion(id);
