@@ -13,8 +13,7 @@ public class DepartementDtoMapper implements Function<Departement, DepartementDt
         return new DepartementDto(
                 departement.getId(),
                 departement.getNom(),
-                departement.getRegion(),
-                departement.getArrondissements()
+                departement.getRegion()
         );
     }
 

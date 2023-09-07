@@ -17,64 +17,54 @@ public class RegionConfig {
             Region ad = new Region(
                     null,
                     "Adamaoua",
-                    "AD",
-                    null
+                    "AD"
             );
 
             Region ce = new Region(
                     null,
                     "Centre",
-                    "CE",
-                    null
+                    "CE"
             );
             Region en = new Region(
                     null,
                     "Extrême-Nord",
-                    "EN",
-                    null
+                    "EN"
             );
             Region es = new Region(
                     null,
                     "Est",
-                    "ES",
-                    null
+                    "ES"
             );
             Region lt = new Region(
                     null,
                     "Littoral",
-                    "LT",
-                    null
+                    "LT"
             );
 
             Region no = new Region(
                     null,
                     "Nord",
-                    "NO",
-                    null
+                    "NO"
             );
             Region nw = new Region(
                     null,
                     "Nord-Ouest",
-                    "NW",
-                    null
+                    "NW"
             );
             Region ou = new Region(
                     null,
                     "Ouest",
-                    "OU",
-                    null
+                    "OU"
             );
             Region su = new Region(
                     null,
                     "Sud",
-                    "SU",
-                    null
+                    "SU"
             );
             Region sw = new Region(
                     null,
                     "Sud-Ouest",
-                    "SW",
-                    null
+                    "SW"
             );
 
             repository.saveAll(List.of(ad, ce, en, es, lt, no, nw, ou, su, sw));

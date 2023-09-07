@@ -1,4 +1,4 @@
-package com.dresen.agePers.advice;
+package com.dresen.agePers.exceptioin.advice;
 
 public record EntityErrorDetails(
         String code,

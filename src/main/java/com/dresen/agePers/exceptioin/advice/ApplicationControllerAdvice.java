@@ -1,8 +1,7 @@
-package com.dresen.agePers.advice;
+package com.dresen.agePers.exceptioin.advice;
 
 import com.dresen.agePers.exceptioin.ResourceNotFoundException;
 import com.dresen.agePers.exceptioin.ResourceTakenException;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -12,23 +11,23 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
 public class ApplicationControllerAdvice {
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(NOT_FOUND)
     @ExceptionHandler({ResourceNotFoundException.class})
     public @ResponseBody EntityErrorDetails handleNotFoundException(ResourceNotFoundException exception) {
 
-        return new EntityErrorDetails("Ressource non trouvée", exception.getMessage());
+        return new EntityErrorDetails("Resource not found", exception.getMessage());
     }
 
-    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseStatus(CONFLICT)
     @ExceptionHandler({ResourceTakenException.class})
     public @ResponseBody EntityErrorDetails handleResourceTakenException(ResourceTakenException exception) {
 
-        return new EntityErrorDetails("Ressource déjà utilisée", exception.getMessage());
+        return new EntityErrorDetails("Resource already taken", exception.getMessage());
     }
 
     @ResponseStatus(BAD_REQUEST)
@@ -40,7 +39,7 @@ public class ApplicationControllerAdvice {
         exception.getBindingResult().getFieldErrors().forEach(
                 fieldError -> {
                     invalidArguments.add(
-                            new InvalidArgument(fieldError.getField(), fieldError.getDefaultMessage())
+                            new InvalidArgument("Argument not valid", fieldError.getField(), fieldError.getDefaultMessage())
                     );
                 });
 

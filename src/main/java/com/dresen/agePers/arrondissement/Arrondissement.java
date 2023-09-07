@@ -1,11 +1,13 @@
 package com.dresen.agePers.arrondissement;
 
 import com.dresen.agePers.departement.Departement;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,11 +21,12 @@ public class Arrondissement {
     private Long id;
 
     @Column(unique = true, nullable = false)
+    @NotBlank
     private String nom;
 
-    @ManyToOne
-    @JoinColumn(name = "departement_id")
-    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "departement_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Departement departement;
 
 

@@ -16,9 +16,8 @@ import com.dresen.agePers.region.Region;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -29,8 +28,7 @@ import static jakarta.persistence.EnumType.STRING;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
+@Data
 @Entity
 @Table(name = "enseignant")
 public class Enseignant {

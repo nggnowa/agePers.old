@@ -13,8 +13,7 @@ public class RegionDtoMapper implements Function<Region, RegionDto> {
         return new RegionDto(
                 region.getId(),
                 region.getNom(),
-                region.getCode(),
-                region.getDepartements()
+                region.getCode()
         );
     }
 

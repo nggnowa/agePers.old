@@ -15,6 +15,6 @@ public class ResourceNotFoundException extends EntityNotFoundException {
 
     public ResourceNotFoundException(String resourceName, String fieldName, Object fieldValue) {
 
-        super(String.format("La ressource <%s> avec <%s> (%s) non trouvée", resourceName, fieldName, fieldValue));
+        super(String.format("%s with %s '%s' doesn't exist.", resourceName, fieldName, fieldValue));
     }
 }

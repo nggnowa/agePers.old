@@ -15,9 +15,15 @@ public class DepartementConfig {
             Departement tibati = new Departement(
                     null,
                     "Tibati",
-                    null,
                     null
             );
+            Departement tignere = new Departement(
+                    null,
+                    "Tignère",
+                    null
+            );
+
+            //repository.saveAll(List.of(tibati, tignere));
 
         };
     }

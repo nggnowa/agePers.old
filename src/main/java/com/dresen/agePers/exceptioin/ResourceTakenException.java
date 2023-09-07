@@ -14,6 +14,6 @@ public class ResourceTakenException extends IllegalStateException {
 
     public ResourceTakenException(String resourceName, String fieldName, Object fieldValue) {
 
-        super(String.format("La valeur (%s) est déjà utilisée comme <%s> dans la ressource <%s>.", fieldValue, fieldName, resourceName));
+        super(String.format("Value '%s' already used as %s in another %s.", fieldValue, fieldName, resourceName));
     }
 }

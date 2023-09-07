@@ -34,8 +34,7 @@ public class RegionService implements IRegionService {
                 new Region(
                         regionDto.id(),
                         regionDto.nom(),
-                        regionDto.code(),
-                        regionDto.departements()
+                        regionDto.code()
                 )
         );
         return dtoMapper.apply(savedRegion);
@@ -75,8 +74,25 @@ public class RegionService implements IRegionService {
                 () -> new ResourceNotFoundException(Region.class.getSimpleName(), "id", id)
         );
 
-        region.setNom(regionDto.nom());
-        region.setCode(regionDto.code());
+        if (!region.getNom().equals(regionDto.nom())) {
+
+            Optional<Region> regionByNom = repository.findByNom(regionDto.nom());
+            if (regionByNom.isPresent()) {
+                throw new ResourceTakenException(Region.class.getSimpleName(), "nom", regionDto.nom());
+            }
+
+            region.setNom(regionDto.nom());
+        }
+
+        if (!region.getCode().equals(regionDto.code())) {
+
+            Optional<Region> regionByCode = repository.findByCode(regionDto.code());
+            if (regionByCode.isPresent()) {
+                throw new ResourceTakenException(Region.class.getSimpleName(), "code", regionDto.code());
+            }
+
+            region.setCode(regionDto.code());
+        }
 
         Region updatedRegion = repository.save(region);
         return dtoMapper.apply(updatedRegion);

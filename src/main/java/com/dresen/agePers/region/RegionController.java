@@ -1,6 +1,5 @@
 package com.dresen.agePers.region;
 
-import com.dresen.agePers.email.EmailDetails;
 import com.dresen.agePers.email.EmailService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -39,22 +38,22 @@ public class RegionController {
     public ResponseEntity<RegionDto> getRegionById(@PathVariable Long id) {
 
         RegionDto region = service.getRegionById(id);
-        emailService.envoyer(new EmailDetails("no-reply@mgn-consulting.org", "ngorba@gmail.com", "Test email Service", "Je teste mon service"));
+        //emailService.envoyer(new EmailDetails("no-reply@mgn-consulting.org", "ngorba@gmail.com", "Test email Service", "Je teste mon service"));
         return ResponseEntity.ok(region);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RegionDto> updateRegion(@PathVariable Long id, @RequestBody RegionDto toUpdate) {
+    public ResponseEntity<RegionDto> updateRegion(@PathVariable Long id, @RequestBody @Valid RegionDto toUpdate) {
 
         RegionDto region = service.updateRegion(id, toUpdate);
         return ResponseEntity.ok(region);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteRegion(Long id) {
+    public ResponseEntity<String> deleteRegion(@PathVariable Long id) {
 
         service.deleteRegion(id);
-        return ResponseEntity.ok("La région a été supprimée avec succès.");
+        return ResponseEntity.ok(String.format("%s with id '%s' successfully deleted.", Region.class.getSimpleName(), id));
     }
 
 }

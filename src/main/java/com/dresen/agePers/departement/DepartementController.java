@@ -1,5 +1,6 @@
 package com.dresen.agePers.departement;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,26 +11,25 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/departement")
 public class DepartementController {
 
     private final DepartementService service;
 
-    @PostMapping
-    public ResponseEntity<DepartementDto> createDepartement(@RequestBody DepartementDto toCreate) {
+    @PostMapping("/regions/{id}/departements")
+    public ResponseEntity<DepartementDto> createDepartement(@PathVariable(name = "id") Long regionId, @RequestBody @Valid DepartementDto toCreate) {
 
-        DepartementDto created = service.createDepartement(toCreate);
+        DepartementDto created = service.createDepartement(regionId, toCreate);
         return new ResponseEntity<>(created, CREATED);
     }
 
-    @GetMapping
+    @GetMapping("/departements")
     public ResponseEntity<List<DepartementDto>> getAllDepartements() {
 
         List<DepartementDto> departementDtos = service.getAllDepartements();
         return ResponseEntity.ok(departementDtos);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/departements/{id}")
     public ResponseEntity<DepartementDto> getDepartementById(@PathVariable Long id) {
 
         DepartementDto departementDto = service.getDepartementById(id);
@@ -37,18 +37,18 @@ public class DepartementController {
 
     }
 
-    @PutMapping
-    public ResponseEntity<DepartementDto> updateDepartement(@PathVariable Long id, @RequestBody DepartementDto toUpdate) {
+    @PutMapping("/departements/{id}")
+    public ResponseEntity<DepartementDto> updateDepartement(@PathVariable Long id, @RequestBody @Valid DepartementDto toUpdate) {
 
         DepartementDto updated = service.updateDepartement(id, toUpdate);
         return ResponseEntity.ok(updated);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/departements/{id}")
     public ResponseEntity<String> deleteDepartement(@PathVariable Long id) {
 
         service.delelteDepartement(id);
-        return ResponseEntity.ok("Le département a été supprimé avec succès");
+        return ResponseEntity.ok(String.format("%s with id '%s' successfully deleted.", Departement.class.getSimpleName(), id));
     }
 
 }

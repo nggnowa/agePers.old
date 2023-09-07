@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface IDepartementService {
 
-    DepartementDto createDepartement(DepartementDto departementDto);
+    DepartementDto createDepartement(Long regionId, DepartementDto departementDto);
 
     List<DepartementDto> getAllDepartements();
 
