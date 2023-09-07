@@ -12,8 +12,7 @@ public class FormationDtoMapper implements Function<Formation, FormationDto> {
 
         return new FormationDto(
                 formation.getId(),
-                formation.getNom(),
-                formation.getDisciplines()
+                formation.getNom()
         );
     }
 

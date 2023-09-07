@@ -29,6 +29,13 @@ public class DepartementController {
         return ResponseEntity.ok(departementDtos);
     }
 
+    @GetMapping("regions/{id}/departements")
+    public ResponseEntity<List<DepartementDto>> getDepartementsByRegionId(@PathVariable(name = "id") Long regionId) {
+
+        List<DepartementDto> departementDtos = service.getDepartementsByRegionId(regionId);
+        return ResponseEntity.ok(departementDtos);
+    }
+
     @GetMapping("/departements/{id}")
     public ResponseEntity<DepartementDto> getDepartementById(@PathVariable Long id) {
 
@@ -50,5 +57,6 @@ public class DepartementController {
         service.delelteDepartement(id);
         return ResponseEntity.ok(String.format("%s with id '%s' successfully deleted.", Departement.class.getSimpleName(), id));
     }
+
 
 }

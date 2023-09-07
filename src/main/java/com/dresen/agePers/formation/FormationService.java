@@ -19,8 +19,7 @@ public class FormationService implements IFormationService {
         Formation saved = repository.save(
                 new Formation(
                         formationDto.id(),
-                        formationDto.nom(),
-                        formationDto.disciplines()
+                        formationDto.nom()
                 )
         );
 

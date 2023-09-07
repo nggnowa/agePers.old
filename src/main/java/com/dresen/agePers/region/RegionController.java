@@ -16,9 +16,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 public class RegionController {
 
     private final RegionService service;
-
-    private final EmailService emailService;
-
+    private final EmailService  emailService;
 
     @PostMapping
     public ResponseEntity<RegionDto> createRegion(@RequestBody @Valid RegionDto toCreate) {
@@ -55,5 +53,6 @@ public class RegionController {
         service.deleteRegion(id);
         return ResponseEntity.ok(String.format("%s with id '%s' successfully deleted.", Region.class.getSimpleName(), id));
     }
+
 
 }

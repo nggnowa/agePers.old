@@ -8,6 +8,8 @@ public interface IDepartementService {
 
     List<DepartementDto> getAllDepartements();
 
+    List<DepartementDto> getDepartementsByRegionId(Long regionId);
+
     DepartementDto getDepartementById(Long id);
 
     DepartementDto updateDepartement(Long id, DepartementDto departementDto);

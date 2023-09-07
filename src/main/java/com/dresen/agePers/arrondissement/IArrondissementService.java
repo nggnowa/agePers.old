@@ -4,9 +4,11 @@ import java.util.List;
 
 public interface IArrondissementService {
 
-    ArrondissementDto createArrondissement(ArrondissementDto arrondissementDto);
+    ArrondissementDto createArrondissement(Long departementId, ArrondissementDto arrondissementDto);
 
     List<ArrondissementDto> getAllArrondissements();
+
+    List<ArrondissementDto> getArrondissementsByDepartementId(Long departementId);
 
     ArrondissementDto getArrondissementById(Long id);
 

@@ -1,14 +1,11 @@
 package com.dresen.agePers.formation;
 
-import com.dresen.agePers.discipline.Discipline;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,10 +19,8 @@ public class Formation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false)
+    @NotBlank
     private String nom;
-
-    @OneToMany(mappedBy = "formation")
-    @JsonManagedReference
-    private List<Discipline> disciplines;
 
 }
