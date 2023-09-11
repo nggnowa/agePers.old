@@ -1,13 +1,13 @@
 package com.dresen.agePers.etablissement;
 
-import com.dresen.agePers.affectation.Affectation;
 import com.dresen.agePers.arrondissement.Arrondissement;
-import com.dresen.agePers.departement.Departement;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,10 +21,7 @@ public class Etablissement {
     @GeneratedValue
     private Long id;
 
-    @Column(
-            nullable = false,
-            unique = true
-    )
+    @Column(nullable = false, unique = true)
     private String nom;
 
     @Column(nullable = false)
@@ -39,17 +36,9 @@ public class Etablissement {
     @Enumerated(EnumType.STRING)
     private SousSysteme sousSysteme;
 
-    @OneToOne
-    @JoinColumn(name = "departement_id")
-    private Departement departement;
-
-    @OneToOne
-    @JoinColumn(name = "arrondissement_id")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "arrondissement_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Arrondissement arrondissement;
-
-    @OneToOne
-    @JoinColumn(name = "affectation_id")
-    private Affectation affectation;
-
 
 }

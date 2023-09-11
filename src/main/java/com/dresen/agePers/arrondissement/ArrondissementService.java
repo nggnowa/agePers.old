@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -24,16 +25,15 @@ public class ArrondissementService implements IArrondissementService {
     public ArrondissementDto createArrondissement(Long departementId, ArrondissementDto arrondissementDto) {
 
         Optional<Departement> departementById = departementRepository.findById(departementId);
-
         if (departementById.isEmpty()) {
             throw new ResourceNotFoundException(Region.class.getSimpleName(), "id", departementId);
         }
 
         Optional<Arrondissement> arrondissementByNom = repository.findByNom(arrondissementDto.nom());
-
         if (arrondissementByNom.isPresent()) {
             throw new ResourceTakenException(Departement.class.getSimpleName(), "nom", arrondissementDto.nom());
         }
+
         Arrondissement savedArrondissement = repository.save(
                 new Arrondissement(
                         arrondissementDto.id(),
@@ -56,7 +56,6 @@ public class ArrondissementService implements IArrondissementService {
     public List<ArrondissementDto> getArrondissementsByDepartementId(Long departementId) {
 
         Optional<Departement> departementById = departementRepository.findById(departementId);
-
         if (departementById.isEmpty()) {
             throw new ResourceNotFoundException(Region.class.getSimpleName(), "id", departementId);
         }
@@ -77,27 +76,31 @@ public class ArrondissementService implements IArrondissementService {
     @Override
     public ArrondissementDto updateArrondissement(Long id, ArrondissementDto arrondissementDto) {
 
-        Arrondissement arrondissement = repository.findById(id).orElseThrow(
+        Arrondissement toUpdate = repository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException(Region.class.getSimpleName(), "id", id)
         );
 
-
-        if (!arrondissement.getNom().equals(arrondissementDto.nom())) {
+        if (!toUpdate.getNom().equals(arrondissementDto.nom())) {
 
             Optional<Arrondissement> arrondissementByNom = repository.findByNom(arrondissementDto.nom());
-
             if (arrondissementByNom.isPresent()) {
                 throw new ResourceTakenException(Arrondissement.class.getSimpleName(), "nom", arrondissementDto.nom());
             }
-            arrondissement.setNom(arrondissementDto.nom());
+
+            toUpdate.setNom(arrondissementDto.nom());
         }
 
-        if (arrondissementDto.departement() != null && !arrondissement.getDepartement().equals(arrondissementDto.departement())) {
-            arrondissement.setDepartement(arrondissementDto.departement());
+        if (!Objects.equals(toUpdate.getDepartement(), arrondissementDto.departement())) {
+
+            Optional<Departement> departementById = departementRepository.findById(arrondissementDto.departement().getId());
+            if (departementById.isEmpty()) {
+                throw new ResourceNotFoundException(Departement.class.getSimpleName(), "id", arrondissementDto.departement().getId());
+            }
+
+            toUpdate.setDepartement(arrondissementDto.departement());
         }
 
-
-        Arrondissement savedArrondissement = repository.save(arrondissement);
+        Arrondissement savedArrondissement = repository.save(toUpdate);
         return dtoMapper.apply(savedArrondissement);
     }
 
@@ -108,5 +111,16 @@ public class ArrondissementService implements IArrondissementService {
                 () -> new ResourceNotFoundException(Region.class.getSimpleName(), "id", id)
         );
         repository.delete(arrondissement);
+    }
+
+    @Override
+    public void deleteArrondissementsByDepartementId(Long id) {
+
+        if (!departementRepository.existsById(id)) {
+            throw new ResourceNotFoundException(Departement.class.getSimpleName(), "id", id);
+        }
+
+        repository.deleteByDepartementId(id);
+
     }
 }

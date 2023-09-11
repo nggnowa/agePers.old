@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -24,13 +25,11 @@ public class DepartementService implements IDepartementService {
     public DepartementDto createDepartement(Long regionId, DepartementDto departementDto) {
 
         Optional<Region> regionById = regionRepository.findById(regionId);
-
         if (regionById.isEmpty()) {
             throw new ResourceNotFoundException(Region.class.getSimpleName(), "id", regionId);
         }
 
         Optional<Departement> departementByNom = repository.findByNom(departementDto.nom());
-
         if (departementByNom.isPresent()) {
             throw new ResourceTakenException(Departement.class.getSimpleName(), "nom", departementDto.nom());
         }
@@ -57,7 +56,6 @@ public class DepartementService implements IDepartementService {
     public List<DepartementDto> getDepartementsByRegionId(Long regionId) {
 
         Optional<Region> regionById = regionRepository.findById(regionId);
-
         if (regionById.isEmpty()) {
             throw new ResourceNotFoundException(Region.class.getSimpleName(), "id", regionId);
         }
@@ -78,25 +76,31 @@ public class DepartementService implements IDepartementService {
     @Override
     public DepartementDto updateDepartement(Long id, DepartementDto departementDto) {
 
-        Departement departement = repository.findById(id).orElseThrow(
+        Departement toUpdate = repository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException(Departement.class.getSimpleName(), "id", id)
         );
 
-        if (!departement.getNom().equals(departementDto.nom())) {
+        if (!toUpdate.getNom().equals(departementDto.nom())) {
 
             Optional<Departement> departementByNom = repository.findByNom(departementDto.nom());
-
             if (departementByNom.isPresent()) {
                 throw new ResourceTakenException(Departement.class.getSimpleName(), "nom", departementDto.nom());
             }
-            departement.setNom(departementDto.nom());
+
+            toUpdate.setNom(departementDto.nom());
         }
 
-        if (departementDto.region() != null && !departement.getRegion().equals(departementDto.region())) {
-            departement.setRegion(departementDto.region());
+        if (!Objects.equals(toUpdate.getRegion(), departementDto.region())) {
+
+            Optional<Region> regionById = regionRepository.findById(departementDto.region().getId());
+            if (regionById.isEmpty()) {
+                throw new ResourceNotFoundException(Region.class.getSimpleName(), "id", departementDto.region().getId());
+            }
+
+            toUpdate.setRegion(departementDto.region());
         }
 
-        Departement updated = repository.save(departement);
+        Departement updated = repository.save(toUpdate);
         return dtoMapper.apply(updated);
     }
 
@@ -108,6 +112,16 @@ public class DepartementService implements IDepartementService {
         );
         repository.delete(departement);
 
+    }
+
+    @Override
+    public void delelteDepartementsByRegionId(Long id) {
+
+        if (!regionRepository.existsById(id)) {
+            throw new ResourceNotFoundException(Region.class.getSimpleName(), "id", id);
+        }
+
+        repository.deleteByRegionId(id);
     }
 
 

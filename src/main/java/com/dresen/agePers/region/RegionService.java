@@ -58,16 +58,6 @@ public class RegionService implements IRegionService {
     }
 
     @Override
-    public RegionDto getRegionByCode(String code) {
-
-        Region region = repository.findByCode(code).orElseThrow(
-                () -> new ResourceNotFoundException(Region.class.getSimpleName(), "code", code)
-        );
-
-        return dtoMapper.apply(region);
-    }
-
-    @Override
     public RegionDto updateRegion(Long id, RegionDto regionDto) {
 
         Region region = repository.findById(id).orElseThrow(

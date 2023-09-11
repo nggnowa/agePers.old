@@ -1,9 +1,6 @@
 package com.dresen.agePers.enseignant;
 
-import com.dresen.agePers.absence.Absence;
-import com.dresen.agePers.affectation.Affectation;
 import com.dresen.agePers.arrondissement.Arrondissement;
-import com.dresen.agePers.conge.Conge;
 import com.dresen.agePers.departement.Departement;
 import com.dresen.agePers.diplome.Diplome;
 import com.dresen.agePers.discipline.Discipline;
@@ -11,13 +8,13 @@ import com.dresen.agePers.enseignant.enums.*;
 import com.dresen.agePers.ethnie.Ethnie;
 import com.dresen.agePers.formation.Formation;
 import com.dresen.agePers.grade.Grade;
-import com.dresen.agePers.mission.Mission;
 import com.dresen.agePers.region.Region;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -96,53 +93,51 @@ public class Enseignant {
 
     private Integer nombreEnfant = 0;
 
-    @OneToOne
-    @JoinColumn(name = "region_id")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "region_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Region regionOrigine;
 
-    @OneToOne
-    @JoinColumn(name = "departement_id")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "departement_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Departement departementOrigine;
 
-    @OneToOne
-    @JoinColumn(name = "arrondissement_id")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "arrondissement_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Arrondissement arrondissementOrigine;
 
-    @OneToOne
-    @JoinColumn(name = "ethnie_id")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "ethnie_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Ethnie ethnie;
 
     @OneToOne
     @JoinColumn(name = "grade_id")
     private Grade grade;
 
-    @OneToOne
-    @JoinColumn(name = "formation_id")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "formation_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Formation formation;
 
-    @OneToOne
-    @JoinColumn(name = "discipline_id")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "discipline_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Discipline discipline;
 
-    @OneToMany(mappedBy = "enseignant")
-    @JsonManagedReference
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(
+            name = "enseignant_diplomes",
+            joinColumns = {@JoinColumn(name = "enseignant_id")},
+            inverseJoinColumns = {@JoinColumn(name = "diplome_id")}
+    )
     private List<Diplome> diplomes;
-
-    @OneToMany(mappedBy = "enseignant")
-    @JsonManagedReference
-    private List<Affectation> affectations;
-
-    @ManyToMany
-    @JoinTable(name = "enseignant_mission")
-    private List<Mission> missions;
-
-    @ManyToMany
-    @JoinTable(name = "enseignant_absence")
-    private List<Absence> absences;
-
-    @ManyToMany
-    @JoinTable(name = "enseignant_conge")
-    private List<Conge> conges;
 
     public LocalDate getDateRetraite() {
 

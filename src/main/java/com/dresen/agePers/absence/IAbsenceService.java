@@ -4,9 +4,11 @@ import java.util.List;
 
 public interface IAbsenceService {
 
-    AbsenceDto createAbsence(AbsenceDto absenceDto);
+    AbsenceDto createAbsence(Long enseignantId, AbsenceDto absenceDto);
 
     List<AbsenceDto> getAllAbsences();
+
+    List<AbsenceDto> getAbsencesByEnseignantId(Long enseignantId);
 
     AbsenceDto getAbsenceById(Long id);
 

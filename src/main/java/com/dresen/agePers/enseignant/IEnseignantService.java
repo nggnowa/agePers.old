@@ -24,6 +24,8 @@ public interface IEnseignantService {
 
     List<EnseignantDto> getAllEnseignants();
 
+    List<EnseignantDto> getEnseignantsByDiplomeId(Long diplomeId); //tous les enseignants ayant le diplome dont l'id est passé en parametre
+
     EnseignantDto updateEnseignant(Long id, EnseignantDto enseignantDto);
 
     EnseignantDto updateEnseignantIidentite(Long id, String nom, Sexe sexe, LocalDate dateNaissance, String lieuNaissance);
@@ -42,6 +44,8 @@ public interface IEnseignantService {
     EnseignantDto updateEnseignantCarriere(Long id, String matricule, Categorie categorie, Statut statut, LocalDate dateEntreeService, Diplome diplomeEntree, Grade grade, String langueTravail);
 
     EnseignantDto updateEnseignantAffectation(Long id, Poste poste, String rang, LocalDate dateAffectation, String referenceAffectation, LocalDate datePriseService, Presence presence, Etablissement etablissement);
+
+    void deleteEnseignant(Long id);
 
     void deleteEnseignant(String matricule);
 

@@ -12,8 +12,11 @@ public interface IArrondissementService {
 
     ArrondissementDto getArrondissementById(Long id);
 
+
     ArrondissementDto updateArrondissement(Long id, ArrondissementDto arrondissementDto);
 
     void deleteArrondissement(Long id);
+
+    void deleteArrondissementsByDepartementId(Long id);
 
 }

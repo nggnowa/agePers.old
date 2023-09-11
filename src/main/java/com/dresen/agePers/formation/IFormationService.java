@@ -9,7 +9,7 @@ public interface IFormationService {
     List<FormationDto> getAllFormations();
 
     FormationDto getFormationById(Long id);
-
+    
     FormationDto updateFormation(Long id, FormationDto formationDto);
 
     void deleteFormation(Long id);

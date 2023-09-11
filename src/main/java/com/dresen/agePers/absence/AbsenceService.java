@@ -1,31 +1,43 @@
 package com.dresen.agePers.absence;
 
+import com.dresen.agePers.enseignant.Enseignant;
+import com.dresen.agePers.enseignant.EnseignantRepository;
 import com.dresen.agePers.exceptioin.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
 public class AbsenceService implements IAbsenceService {
 
-    private final AbsenceRepository repository;
+    private final EnseignantRepository enseignantRepository;
 
-    private final AbsenceDtoMapper dtoMapper;
+    private final AbsenceRepository repository;
+    private final AbsenceDtoMapper  dtoMapper;
+
 
     @Override
-    public AbsenceDto createAbsence(AbsenceDto absenceDto) {
+    public AbsenceDto createAbsence(Long enseignantId, AbsenceDto absenceDto) {
+
+        Optional<Enseignant> enseignantById = enseignantRepository.findById(enseignantId);
+
+        if (enseignantById.isEmpty()) {
+            throw new ResourceNotFoundException(Enseignant.class.getSimpleName(), "id", enseignantId);
+        }
 
         Absence saved = repository.save(
                 new Absence(
                         absenceDto.id(),
+                        absenceDto.nature(),
                         absenceDto.motif(),
                         absenceDto.dateDepart(),
                         absenceDto.dateRetour(),
                         absenceDto.duree(),
-                        absenceDto.enseignants()
+                        enseignantById.get()
                 )
         );
 
@@ -38,6 +50,19 @@ public class AbsenceService implements IAbsenceService {
         List<Absence> absences = repository.findAll();
         return absences.stream().map(dtoMapper).collect(Collectors.toList());
 
+    }
+
+    @Override
+    public List<AbsenceDto> getAbsencesByEnseignantId(Long enseignantId) {
+
+        Optional<Enseignant> enseignantById = enseignantRepository.findById(enseignantId);
+
+        if (enseignantById.isEmpty()) {
+            throw new ResourceNotFoundException(Enseignant.class.getSimpleName(), "id", enseignantId);
+        }
+
+        List<Absence> absences = repository.findAbsencesByEnseignantId(enseignantId);
+        return absences.stream().map(dtoMapper).collect(Collectors.toList());
     }
 
     @Override
@@ -61,7 +86,7 @@ public class AbsenceService implements IAbsenceService {
         absence.setMotif(absenceDto.motif());
         absence.setDateDepart(absenceDto.dateDepart());
         absence.setDateRetour(absenceDto.dateRetour());
-        absence.setEnseignants(absenceDto.enseignants());
+        absence.setEnseignant(absenceDto.enseignant());
 
         Absence saved = repository.save(absence);
 

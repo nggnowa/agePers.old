@@ -1,5 +1,6 @@
 package com.dresen.agePers.formation;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,13 +11,13 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/formation")
+@RequestMapping("/formations")
 public class FormationController {
 
     private final FormationService service;
 
     @PostMapping
-    public ResponseEntity<FormationDto> createFormation(@RequestBody FormationDto formationDto) {
+    public ResponseEntity<FormationDto> createFormation(@RequestBody @Valid FormationDto formationDto) {
 
         FormationDto saved = service.createFormation(formationDto);
         return new ResponseEntity<>(saved, CREATED);
@@ -37,16 +38,16 @@ public class FormationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FormationDto> createFormation(@PathVariable Long id, @RequestBody FormationDto formationDto) {
+    public ResponseEntity<FormationDto> updateFormation(@PathVariable Long id, @RequestBody @Valid FormationDto formationDto) {
 
         FormationDto updated = service.updateFormation(id, formationDto);
         return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> createFormation(@PathVariable Long id) {
+    public ResponseEntity<String> deleteFormation(@PathVariable Long id) {
 
         service.deleteFormation(id);
-        return ResponseEntity.ok("La formation a été supprimée avec succès");
+        return ResponseEntity.ok(String.format("%s with id '%s' successfully deleted.", Formation.class.getSimpleName(), id));
     }
 }

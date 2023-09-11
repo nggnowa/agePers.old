@@ -13,9 +13,7 @@ public class DiplomeDtoMapper implements Function<Diplome, DiplomeDto> {
         return new DiplomeDto(
                 diplome.getId(),
                 diplome.getNom(),
-                diplome.getCode(),
-                diplome.getCycle(),
-                diplome.getEnseignant()
+                diplome.getCode()
         );
     }
 

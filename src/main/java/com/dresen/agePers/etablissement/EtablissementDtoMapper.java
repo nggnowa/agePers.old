@@ -16,9 +16,7 @@ public class EtablissementDtoMapper implements Function<Etablissement, Etablisse
                 etablissement.getCategorie(),
                 etablissement.getOrdreEnseignement(),
                 etablissement.getSousSysteme(),
-                etablissement.getDepartement(),
-                etablissement.getArrondissement(),
-                etablissement.getAffectation()
+                etablissement.getArrondissement()
         );
     }
 }

@@ -1,10 +1,7 @@
 package com.dresen.agePers.enseignant;
 
 
-import com.dresen.agePers.absence.Absence;
-import com.dresen.agePers.affectation.Affectation;
 import com.dresen.agePers.arrondissement.Arrondissement;
-import com.dresen.agePers.conge.Conge;
 import com.dresen.agePers.departement.Departement;
 import com.dresen.agePers.diplome.Diplome;
 import com.dresen.agePers.discipline.Discipline;
@@ -12,7 +9,6 @@ import com.dresen.agePers.enseignant.enums.*;
 import com.dresen.agePers.ethnie.Ethnie;
 import com.dresen.agePers.formation.Formation;
 import com.dresen.agePers.grade.Grade;
-import com.dresen.agePers.mission.Mission;
 import com.dresen.agePers.region.Region;
 import jakarta.validation.constraints.*;
 
@@ -40,11 +36,9 @@ public record EnseignantDto(
         @Past
         LocalDate dateEntreeService,
         Integer anciennete,
-        @NotNull
         LocalDate dateRetraite,
         @NotNull
         Langue langueTravail,
-
         @NotNull
         Presence presence,
         @Pattern(regexp = "^6[2-9][0-9]{7}$")
@@ -66,16 +60,9 @@ public record EnseignantDto(
         Ethnie ethnie,
         @NotNull
         Grade grade,
-        @NotNull
         Formation formation,
-        @NotNull
         Discipline discipline,
-        List<Diplome> diplomes,
-        List<Affectation> affectations,
-        List<Mission> missions,
-        List<Absence> absences,
-        List<Conge> conges
-
+        List<Diplome> diplomes
 
 ) {
 

@@ -1,11 +1,9 @@
 package com.dresen.agePers.region;
 
-import lombok.Data;
+public record Searchrequest(
+        String nom,
+        String code
+) {
 
-@Data
-public class Searchrequest {
-
-    private String nom;
-    private String code;
 
 }

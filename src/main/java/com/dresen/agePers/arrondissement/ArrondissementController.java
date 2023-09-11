@@ -1,5 +1,6 @@
 package com.dresen.agePers.arrondissement;
 
+import com.dresen.agePers.departement.Departement;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -55,6 +56,17 @@ public class ArrondissementController {
 
         service.deleteArrondissement(id);
         return ResponseEntity.ok(String.format("%s with id '%s' successfully deleted.", Arrondissement.class.getSimpleName(), id));
+    }
+
+    @DeleteMapping("departements/{id}/arrondissements")
+    public ResponseEntity<String> deleteArrondissementsByDepartementId(@PathVariable(name = "id") Long departementId) {
+
+        service.deleteArrondissementsByDepartementId(departementId);
+        return ResponseEntity.ok(
+                String.format("All %ss of %s with id '%s' successfully deleted.",
+                              Arrondissement.class.getSimpleName(),
+                              Departement.class.getSimpleName(),
+                              departementId));
     }
 
 

@@ -1,9 +1,13 @@
 package com.dresen.agePers.mission;
 
+import com.dresen.agePers.enseignant.Enseignant;
+import com.dresen.agePers.enseignant.EnseignantRepository;
+import com.dresen.agePers.exceptioin.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -12,10 +16,18 @@ public class MissionService implements IMissionService {
 
     private final MissionRepository repository;
 
-    private final MissionDtoMapper dtoMapper;
+    private final MissionDtoMapper     dtoMapper;
+    private final EnseignantRepository enseignantRepository;
+
 
     @Override
-    public MissionDto createMission(MissionDto missionDto) {
+    public MissionDto createMission(Long enseignantId, MissionDto missionDto) {
+
+        Optional<Enseignant> enseignantById = enseignantRepository.findById(enseignantId);
+
+        if (enseignantById.isEmpty()) {
+            throw new ResourceNotFoundException(Enseignant.class.getSimpleName(), "id", enseignantId);
+        }
 
         Mission saved = repository.save(
                 new Mission(
@@ -24,7 +36,7 @@ public class MissionService implements IMissionService {
                         missionDto.dateDepart(),
                         missionDto.dateRetour(),
                         missionDto.duree(),
-                        missionDto.enseignants()
+                        enseignantById.get()
                 )
         );
 
@@ -40,10 +52,18 @@ public class MissionService implements IMissionService {
     }
 
     @Override
+    public List<MissionDto> getMissionsByEnseignantId(Long enseignantId) {
+
+        List<Mission> missions = repository.findByEnseignantId(enseignantId);
+        return missions.stream().map(dtoMapper).collect(Collectors.toList());
+
+    }
+
+    @Override
     public MissionDto getMissionById(Long id) {
 
         Mission mission = repository.findById(id).orElseThrow(
-                () -> new RuntimeException("La mission n'existe pas.")
+                () -> new ResourceNotFoundException(Enseignant.class.getSimpleName(), "id", id)
         );
 
         return dtoMapper.apply(mission);
@@ -53,14 +73,14 @@ public class MissionService implements IMissionService {
     public MissionDto updateMission(Long id, MissionDto missionDto) {
 
         Mission mission = repository.findById(id).orElseThrow(
-                () -> new RuntimeException("La mission n'existe pas.")
+                () -> new ResourceNotFoundException(Enseignant.class.getSimpleName(), "id", id)
         );
 
         mission.setId(missionDto.id());
         mission.setObjet(missionDto.objet());
         mission.setDateDepart(missionDto.dateDepart());
         mission.setDateRetour(missionDto.dateRetour());
-        mission.setEnseignants(missionDto.enseignants());
+        mission.setEnseignant(missionDto.enseignant());
 
         Mission saved = repository.save(mission);
 
@@ -71,7 +91,7 @@ public class MissionService implements IMissionService {
     public void deleteMission(Long id) {
 
         Mission mission = repository.findById(id).orElseThrow(
-                () -> new RuntimeException("La mission n'existe pas.")
+                () -> new ResourceNotFoundException(Enseignant.class.getSimpleName(), "id", id)
         );
 
         repository.delete(mission);

@@ -12,8 +12,11 @@ public interface IDepartementService {
 
     DepartementDto getDepartementById(Long id);
 
+
     DepartementDto updateDepartement(Long id, DepartementDto departementDto);
 
     void delelteDepartement(Long id);
+
+    void delelteDepartementsByRegionId(Long id);
 
 }

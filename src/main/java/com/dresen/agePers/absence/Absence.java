@@ -5,10 +5,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,7 +23,10 @@ public class Absence {
     private Long id;
 
     @Column(nullable = false)
-    private String motif;
+    @Enumerated(EnumType.STRING)
+    private Nature nature; //persmission ou congé;
+
+    private String motif;//s'il s'agit d'une permission
 
     @Column(name = "date_depart")
     private LocalDate dateDepart;
@@ -33,13 +37,10 @@ public class Absence {
     @Transient
     private Integer duree; //en nombre de jours
 
-    @ManyToMany
-    @JoinTable(
-            name = "enseignant_absence",
-            joinColumns = @JoinColumn(name = "enseignant_id"),
-            inverseJoinColumns = @JoinColumn(name = "absence_id")
-    )
-    private List<Enseignant> enseignants;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "enseignant_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Enseignant enseignant;
 
     public Integer getDuree() {
 

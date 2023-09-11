@@ -9,7 +9,7 @@ public interface IPosteService {
     List<PosteDto> getAllPostes();
 
     PosteDto getPosteById(Long id);
-
+    
     PosteDto updatePoste(Long id, PosteDto posteDto);
 
     void deletePoste(Long id);

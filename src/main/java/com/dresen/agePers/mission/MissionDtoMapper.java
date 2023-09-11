@@ -16,7 +16,7 @@ public class MissionDtoMapper implements Function<Mission, MissionDto> {
                 mission.getDateDepart(),
                 mission.getDateRetour(),
                 mission.getDuree(),
-                mission.getEnseignants()
+                mission.getEnseignant()
         );
     }
 }

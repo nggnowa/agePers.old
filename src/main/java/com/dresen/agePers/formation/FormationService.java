@@ -1,9 +1,12 @@
 package com.dresen.agePers.formation;
 
+import com.dresen.agePers.exceptioin.ResourceNotFoundException;
+import com.dresen.agePers.exceptioin.ResourceTakenException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -15,6 +18,12 @@ public class FormationService implements IFormationService {
 
     @Override
     public FormationDto createFormation(FormationDto formationDto) {
+
+        Optional<Formation> formationByNom = repository.findByNom(formationDto.nom());
+
+        if (formationByNom.isPresent()) {
+            throw new ResourceTakenException(Formation.class.getSimpleName(), "nom", formationDto.nom());
+        }
 
         Formation saved = repository.save(
                 new Formation(
@@ -38,7 +47,7 @@ public class FormationService implements IFormationService {
     public FormationDto getFormationById(Long id) {
 
         Formation formation = repository.findById(id).orElseThrow(
-                () -> new RuntimeException("La formation n'existe pas.")
+                () -> new ResourceNotFoundException(Formation.class.getSimpleName(), "id", id)
         );
 
         return dtoMapper.apply(formation);
@@ -48,10 +57,19 @@ public class FormationService implements IFormationService {
     public FormationDto updateFormation(Long id, FormationDto formationDto) {
 
         Formation formation = repository.findById(id).orElseThrow(
-                () -> new RuntimeException("La formation n'existe pas.")
+                () -> new ResourceNotFoundException(Formation.class.getSimpleName(), "id", id)
         );
 
-        formation.setNom(formationDto.nom());
+        if (!formation.getNom().equals(formationDto.nom())) {
+            Optional<Formation> formationByNom = repository.findByNom(formationDto.nom());
+
+            if (formationByNom.isPresent()) {
+                throw new ResourceTakenException(Formation.class.getSimpleName(), "nom", formationDto.nom());
+            }
+            formation.setNom(formationDto.nom());
+
+        }
+
         Formation saved = repository.save(formation);
 
         return dtoMapper.apply(saved);
@@ -61,7 +79,7 @@ public class FormationService implements IFormationService {
     public void deleteFormation(Long id) {
 
         Formation formation = repository.findById(id).orElseThrow(
-                () -> new RuntimeException("La formation n'existe pas.")
+                () -> new ResourceNotFoundException(Formation.class.getSimpleName(), "id", id)
         );
 
         repository.delete(formation);

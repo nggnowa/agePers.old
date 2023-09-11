@@ -70,11 +70,7 @@ public class EnseignantService implements IEnseignantService {
                 enseignantDto.grade(),
                 enseignantDto.formation(),
                 enseignantDto.discipline(),
-                enseignantDto.diplomes(),
-                enseignantDto.affectations(),
-                enseignantDto.missions(),
-                enseignantDto.absences(),
-                enseignantDto.conges()
+                enseignantDto.diplomes()
         );
 
         Enseignant savedEnseignant = repository.save(enseignant);
@@ -109,6 +105,13 @@ public class EnseignantService implements IEnseignantService {
     }
 
     @Override
+    public List<EnseignantDto> getEnseignantsByDiplomeId(Long diplomeId) {
+
+        List<Enseignant> enseignants = repository.findEnseignantsByDiplomesId(diplomeId);
+        return enseignants.stream().map(dtoMapper).collect(Collectors.toList());
+    }
+
+    @Override
     public EnseignantDto updateEnseignant(Long id, EnseignantDto enseignantDto) {
 
         Enseignant enseignant = repository.findById(id).orElseThrow(
@@ -137,10 +140,6 @@ public class EnseignantService implements IEnseignantService {
         enseignant.setFormation(enseignantDto.formation());
         enseignant.setDiscipline(enseignantDto.discipline());
         enseignant.setDiplomes(enseignantDto.diplomes());
-        enseignant.setAffectations(enseignantDto.affectations());
-        enseignant.setMissions(enseignantDto.missions());
-        enseignant.setAbsences(enseignantDto.absences());
-        enseignant.setConges(enseignantDto.conges());
 
         Enseignant updated = repository.save(enseignant);
         return dtoMapper.apply(updated);
@@ -258,6 +257,16 @@ public class EnseignantService implements IEnseignantService {
 
         Enseignant updated = repository.save(enseignant);
         return dtoMapper.apply(updated);
+    }
+
+    @Override
+    public void deleteEnseignant(Long id) {
+
+        Enseignant enseignant = repository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException(Enseignant.class.getSimpleName(), "id", id)
+        );
+        repository.delete(enseignant);
+
     }
 
     @Override

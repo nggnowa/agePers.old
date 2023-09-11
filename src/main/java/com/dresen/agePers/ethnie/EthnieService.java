@@ -1,9 +1,12 @@
 package com.dresen.agePers.ethnie;
 
+import com.dresen.agePers.exceptioin.ResourceNotFoundException;
+import com.dresen.agePers.exceptioin.ResourceTakenException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -15,6 +18,11 @@ public class EthnieService implements IEthnieService {
 
     @Override
     public EthnieDto createEthnie(EthnieDto ethnieDto) {
+
+        Optional<Ethnie> ethnieByNom = repository.findByNom(ethnieDto.nom());
+        if (ethnieByNom.isPresent()) {
+            throw new ResourceTakenException(Ethnie.class.getSimpleName(), "nom", ethnieDto.nom());
+        }
 
         Ethnie saved = repository.save(
                 new Ethnie(
@@ -38,7 +46,7 @@ public class EthnieService implements IEthnieService {
     public EthnieDto getEthnieById(Long id) {
 
         Ethnie ethnie = repository.findById(id).orElseThrow(
-                () -> new RuntimeException("L'ethnie n'existe pas.")
+                () -> new ResourceNotFoundException(Ethnie.class.getSimpleName(), "id", id)
         );
 
         return dtoMapper.apply(ethnie);
@@ -47,13 +55,20 @@ public class EthnieService implements IEthnieService {
     @Override
     public EthnieDto updateEthnie(Long id, EthnieDto ethnieDto) {
 
-        Ethnie ethnie = repository.findById(id).orElseThrow(
-                () -> new RuntimeException("L'ethnie n'existe pas.")
+        Ethnie toUpdate = repository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException(Ethnie.class.getSimpleName(), "id", id)
         );
 
-        ethnie.setNom(ethnieDto.nom());
-        Ethnie saved = repository.save(ethnie);
+        if (!toUpdate.getNom().equals(ethnieDto.nom())) {
+            Optional<Ethnie> ethnieByNom = repository.findByNom(ethnieDto.nom());
+            if (ethnieByNom.isPresent()) {
+                throw new ResourceTakenException(Ethnie.class.getSimpleName(), "nom", ethnieDto.nom());
+            }
 
+            toUpdate.setNom(ethnieDto.nom());
+        }
+
+        Ethnie saved = repository.save(toUpdate);
         return dtoMapper.apply(saved);
     }
 
@@ -61,7 +76,7 @@ public class EthnieService implements IEthnieService {
     public void deleteEthnie(Long id) {
 
         Ethnie ethnie = repository.findById(id).orElseThrow(
-                () -> new RuntimeException("L'ethnie n'existe pas.")
+                () -> new ResourceNotFoundException(Ethnie.class.getSimpleName(), "id", id)
         );
 
         repository.delete(ethnie);

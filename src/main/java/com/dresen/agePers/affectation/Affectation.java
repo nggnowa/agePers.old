@@ -3,12 +3,13 @@ package com.dresen.agePers.affectation;
 import com.dresen.agePers.enseignant.Enseignant;
 import com.dresen.agePers.etablissement.Etablissement;
 import com.dresen.agePers.poste.Poste;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -42,17 +43,18 @@ public class Affectation {
     @Transient
     private Integer anciennete;
 
-    @ManyToOne
-    @JoinColumn(name = "enseignant_id")
-    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "enseignant_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Enseignant enseignant;
 
     @OneToOne
     @JoinColumn(name = "poste_id")
     private Poste poste;
 
-    @OneToOne
-    @JoinColumn(name = "etablissement_id")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "etablissement_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Etablissement etablissement;
 
     public Integer getAnciennete() {

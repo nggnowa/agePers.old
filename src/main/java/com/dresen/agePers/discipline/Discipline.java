@@ -1,12 +1,13 @@
 package com.dresen.agePers.discipline;
 
 import com.dresen.agePers.formation.Formation;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,11 +21,12 @@ public class Discipline {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false)
     private String nom;
 
-    @ManyToOne
-    @JoinColumn(name = "formation_id")
-    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "formation_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Formation formation;
 
 }

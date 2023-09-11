@@ -1,5 +1,6 @@
 package com.dresen.agePers.discipline;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,44 +11,51 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/discipline")
 public class DisciplineController {
 
     private final DisciplineService service;
 
-    @PostMapping
-    public ResponseEntity<DisciplineDto> createDiscipline(@RequestBody DisciplineDto disciplineDto) {
+    @PostMapping("/formations/{id}/disciplines")
+    public ResponseEntity<DisciplineDto> createDiscipline(@PathVariable(name = "id") Long formationId, @RequestBody @Valid DisciplineDto disciplineDto) {
 
-        DisciplineDto saved = service.createDiscipline(disciplineDto);
+        DisciplineDto saved = service.createDiscipline(formationId, disciplineDto);
         return new ResponseEntity<>(saved, CREATED);
     }
 
-    @GetMapping
+    @GetMapping("/disciplines")
     public ResponseEntity<List<DisciplineDto>> getAllDisciplines() {
 
         List<DisciplineDto> disciplines = service.getAllDisciplines();
         return ResponseEntity.ok(disciplines);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/formations/{id}/disciplines")
+    public ResponseEntity<List<DisciplineDto>> getDisciplinesByFormationId(@PathVariable(name = "id") Long fornationId) {
+
+        List<DisciplineDto> disciplines = service.getDisciplinesByFormationId(fornationId);
+        return ResponseEntity.ok(disciplines);
+    }
+
+    @GetMapping("/disciplines/{id}")
     public ResponseEntity<DisciplineDto> getDisciplineById(@PathVariable Long id) {
 
         DisciplineDto disciplineDto = service.getDisciplineById(id);
         return ResponseEntity.ok(disciplineDto);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<DisciplineDto> createDiscipline(@PathVariable Long id, @RequestBody DisciplineDto disciplineDto) {
+    @PutMapping("/disciplines/{id}")
+    public ResponseEntity<DisciplineDto> updateDiscipline(@PathVariable Long id, @RequestBody @Valid DisciplineDto disciplineDto) {
 
         DisciplineDto updated = service.updateDiscipline(id, disciplineDto);
         return ResponseEntity.ok(updated);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> createDiscipline(@PathVariable Long id) {
+
+    @DeleteMapping("/disciplines/{id}")
+    public ResponseEntity<String> deleteDiscipline(@PathVariable Long id) {
 
         service.deleteDiscipline(id);
-        return ResponseEntity.ok("L'discipline a été supprimée avec succès");
+        return ResponseEntity.ok(String.format("%s with id '%s' successfully deleted.", Discipline.class.getSimpleName(), id));
     }
 
 }

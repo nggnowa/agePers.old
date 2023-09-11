@@ -4,9 +4,13 @@ import java.util.List;
 
 public interface IAffectationService {
 
-    AffectationDto createAffectation(AffectationDto affectationDto);
+    AffectationDto createAffectation(Long enseignantId, Long etablissementId, AffectationDto affectationDto);
 
     List<AffectationDto> getAllAffectations();
+
+    List<AffectationDto> getAffectationsByEnseingnantId(Long enseigantId);
+
+    List<AffectationDto> getAffectationsByEtablissementId(Long enseigantId);
 
     AffectationDto getAffectationById(Long id);
 

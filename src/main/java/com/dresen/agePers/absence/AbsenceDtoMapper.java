@@ -12,11 +12,12 @@ public class AbsenceDtoMapper implements Function<Absence, AbsenceDto> {
 
         return new AbsenceDto(
                 absence.getId(),
+                absence.getNature(),
                 absence.getMotif(),
                 absence.getDateDepart(),
                 absence.getDateRetour(),
                 absence.getDuree(),
-                absence.getEnseignants()
+                absence.getEnseignant()
         );
     }
 }

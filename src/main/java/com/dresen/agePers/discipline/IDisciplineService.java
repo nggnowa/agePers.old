@@ -4,9 +4,11 @@ import java.util.List;
 
 public interface IDisciplineService {
 
-    DisciplineDto createDiscipline(DisciplineDto disciplineDto);
+    DisciplineDto createDiscipline(Long formationId, DisciplineDto disciplineDto);
 
     List<DisciplineDto> getAllDisciplines();
+
+    List<DisciplineDto> getDisciplinesByFormationId(Long formationId);
 
     DisciplineDto getDisciplineById(Long id);
 

@@ -21,6 +21,8 @@ public class Poste {
     @Column(unique = true, nullable = false)
     private String titre;
 
-    private String rang;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Rang rang;
 
 }

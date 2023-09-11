@@ -8,7 +8,15 @@ public interface IEtablissementService {
 
     List<EtablissementDto> getAllEtablissements();
 
+    List<EtablissementDto> getEtablissementsByCategorie(Categorie categorie);
+
+    List<EtablissementDto> getEtablissementsByOrdreEnseignement(OrdreEnseignement ordreEnseignement);
+
+    List<EtablissementDto> getEtablissementsBySousSysteme(SousSysteme sousSysteme);
+
     EtablissementDto getEtablissementById(Long id);
+
+    EtablissementDto getEtablissementByNom(String nom);
 
     EtablissementDto updateEtablissement(Long id, EtablissementDto etablissementDto);
 

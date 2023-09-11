@@ -6,11 +6,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public record AbsenceDto(
         Long id,
         @NotBlank
+        Nature nature,
         String motif,
         @NotNull
         LocalDate dateDepart,
@@ -18,7 +18,8 @@ public record AbsenceDto(
         @NotNull
         LocalDate dateRetour,
         Integer duree, //en nombre de jours
-        List<Enseignant> enseignants
+        @NotNull
+        Enseignant enseignant
 ) {
 
 }

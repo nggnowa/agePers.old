@@ -9,7 +9,7 @@ public interface IEthnieService {
     List<EthnieDto> getAllEthnies();
 
     EthnieDto getEthnieById(Long id);
-
+    
     EthnieDto updateEthnie(Long id, EthnieDto ethnieDto);
 
     void deleteEthnie(Long id);

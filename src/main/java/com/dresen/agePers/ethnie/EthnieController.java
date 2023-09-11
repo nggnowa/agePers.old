@@ -10,7 +10,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/ethnie")
+@RequestMapping("/ethnies")
 public class EthnieController {
 
     private final EthnieService service;
@@ -37,17 +37,17 @@ public class EthnieController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EthnieDto> createEthnie(@PathVariable Long id, @RequestBody EthnieDto ethnieDto) {
+    public ResponseEntity<EthnieDto> updateEthnie(@PathVariable Long id, @RequestBody EthnieDto ethnieDto) {
 
         EthnieDto updated = service.updateEthnie(id, ethnieDto);
         return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> createEthnie(@PathVariable Long id) {
+    public ResponseEntity<String> deleteEthnie(@PathVariable Long id) {
 
         service.deleteEthnie(id);
-        return ResponseEntity.ok("L'ethnie a été supprimée avec succès");
+        return ResponseEntity.ok(String.format("%s with id '%s' successfully deleted.", Ethnie.class.getSimpleName(), id));
     }
 
 

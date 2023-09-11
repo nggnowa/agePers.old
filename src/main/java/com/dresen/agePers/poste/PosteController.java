@@ -1,5 +1,6 @@
 package com.dresen.agePers.poste;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,13 +11,13 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/poste")
+@RequestMapping("/postes")
 public class PosteController {
 
     private final PosteService service;
 
     @PostMapping
-    public ResponseEntity<PosteDto> createPoste(@RequestBody PosteDto posteDto) {
+    public ResponseEntity<PosteDto> createPoste(@RequestBody @Valid PosteDto posteDto) {
 
         PosteDto saved = service.createPoste(posteDto);
         return new ResponseEntity<>(saved, CREATED);
@@ -37,17 +38,17 @@ public class PosteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PosteDto> createPoste(@PathVariable Long id, @RequestBody PosteDto posteDto) {
+    public ResponseEntity<PosteDto> updatePoste(@PathVariable Long id, @RequestBody @Valid PosteDto posteDto) {
 
         PosteDto updated = service.updatePoste(id, posteDto);
         return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> createPoste(@PathVariable Long id) {
+    public ResponseEntity<String> deletePoste(@PathVariable Long id) {
 
         service.deletePoste(id);
-        return ResponseEntity.ok("Le poste a été supprimée avec succès");
+        return ResponseEntity.ok(String.format("%s with id '%s' successfully deleted.", Poste.class.getSimpleName(), id));
     }
 
 }

@@ -8,7 +8,7 @@ public record PosteDto(
         @NotBlank
         String titre,
         @NotNull
-        String rang
+        Rang rang
 ) {
 
 }

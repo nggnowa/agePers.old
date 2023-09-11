@@ -4,9 +4,11 @@ import java.util.List;
 
 public interface IMissionService {
 
-    MissionDto createMission(MissionDto missionDto);
+    MissionDto createMission(Long enseignantId, MissionDto missionDto);
 
     List<MissionDto> getAllMissions();
+
+    List<MissionDto> getMissionsByEnseignantId(Long enseignantId);
 
     MissionDto getMissionById(Long id);
 

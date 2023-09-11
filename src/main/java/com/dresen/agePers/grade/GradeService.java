@@ -14,22 +14,6 @@ public class GradeService implements IGradeService {
     private final GradeDtoMapper  dtoMapper;
 
     @Override
-    public GradeDto createGrade(GradeDto gradeDto) {
-
-        Grade saved = repository.save(
-                new Grade(
-                        gradeDto.id(),
-                        gradeDto.grade(),
-                        gradeDto.classe(),
-                        gradeDto.echelon(),
-                        gradeDto.indice()
-                )
-        );
-
-        return dtoMapper.apply(saved);
-    }
-
-    @Override
     public List<GradeDto> getAllGrades() {
 
         List<Grade> grades = repository.findAll();

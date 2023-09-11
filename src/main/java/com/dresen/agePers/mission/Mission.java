@@ -5,10 +5,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,13 +34,10 @@ public class Mission {
     @Transient
     private Integer duree; //en nombre de jours
 
-    @ManyToMany
-    @JoinTable(
-            name = "enseignant_mission",
-            joinColumns = @JoinColumn(name = "enseignant_id"),
-            inverseJoinColumns = @JoinColumn(name = "mission_id")
-    )
-    private List<Enseignant> enseignants;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "enseignant_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Enseignant enseignant;
 
     public Integer getDuree() {
 

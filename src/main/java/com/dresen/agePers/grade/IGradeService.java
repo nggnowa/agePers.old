@@ -4,8 +4,6 @@ import java.util.List;
 
 public interface IGradeService {
 
-    GradeDto createGrade(GradeDto gradeDto);
-
     List<GradeDto> getAllGrades();
 
     GradeDto getGradeById(Long id);

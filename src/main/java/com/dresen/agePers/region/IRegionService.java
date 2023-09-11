@@ -10,8 +10,6 @@ public interface IRegionService {
 
     RegionDto getRegionById(Long id);
 
-    RegionDto getRegionByCode(String code);
-
     RegionDto updateRegion(Long id, RegionDto regionDto);
 
     void deleteRegion(Long id);

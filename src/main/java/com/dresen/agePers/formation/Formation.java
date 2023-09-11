@@ -1,7 +1,6 @@
 package com.dresen.agePers.formation;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +19,6 @@ public class Formation {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    @NotBlank
     private String nom;
 
 }

@@ -23,22 +23,16 @@ public class RegionSearchDao {
         CriteriaBuilder       criteriaBuilder = manager.getCriteriaBuilder();
         CriteriaQuery<Region> criteriaQuery   = criteriaBuilder.createQuery(Region.class);
 
-        //select * from region
-
-        Root<Region> root = criteriaQuery.from(Region.class);
+        Root<Region> root = criteriaQuery.from(Region.class); //select * from region
 
         //prepare the where clause
-        //WHERE nom like '%Centre%'
-        Predicate nomPredicate = criteriaBuilder.like(root.get("nom"), "%" + nom + "%");
+        Predicate nomPredicate  = criteriaBuilder.like(root.get("nom"), "%" + nom + "%"); //WHERE nom like '%Centre%'
+        Predicate codePredicate = criteriaBuilder.like(root.get("code"), "%" + code + "%"); //WHERE code like '%CE%'
 
-        //WHERE code like '%CE%'
-        Predicate codePredicate = criteriaBuilder.like(root.get("code"), "%" + code + "%");
-
-
-        //Predicate orPredicate  = criteriaBuilder.or(nomPredicate, codePredicate);
+        Predicate orPredicate  = criteriaBuilder.or(nomPredicate, codePredicate);
         Predicate andPredicate = criteriaBuilder.and(nomPredicate, codePredicate);
 
-        //=> final query ==> Select * from region where nom like '%Centre%' or code like '%CE%'
+        //=> final query ==> Select * from region where nom like '%Centre%' and code like '%CE%'
         criteriaQuery.where(andPredicate);
 
         TypedQuery<Region> query = manager.createQuery(criteriaQuery);
@@ -54,21 +48,21 @@ public class RegionSearchDao {
 
         //select from region
         Root<Region> root = criteriaQuery.from(Region.class);
-        //prepare the where clause
 
-        if (searchrequest.getNom() != null) {
+        //prepare the where clause
+        if (searchrequest.nom() != null) {
             //WHERE nom like '%Centre%'
-            Predicate nomPredicate = criteriaBuilder.like(root.get("nom"), "%" + searchrequest.getNom() + "%");
+            Predicate nomPredicate = criteriaBuilder.like(root.get("nom"), "%" + searchrequest.nom() + "%");
             predicates.add(nomPredicate);
         }
 
-        if (searchrequest.getCode() != null) {
+        if (searchrequest.code() != null) {
             //WHERE code like '%CE%'
-            Predicate codePredicate = criteriaBuilder.like(root.get("code"), "%" + searchrequest.getCode() + "%");
+            Predicate codePredicate = criteriaBuilder.like(root.get("code"), "%" + searchrequest.code() + "%");
             predicates.add(codePredicate);
         }
 
-        //=> final query ==> Select * from region where nom like '%Centre%' or code like '%CE%'
+        //=> final query ==> Select * from region where nom like '%Centre%' and code like '%CE%'
         criteriaQuery.where(
                 criteriaBuilder.and(predicates.toArray(new Predicate[0]))
         );

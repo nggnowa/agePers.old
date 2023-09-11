@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public record MissionDto(
         Long id,
@@ -17,7 +16,8 @@ public record MissionDto(
         @Future
         LocalDate dateRetour,
         Integer duree, //en nombre de jours
-        List<Enseignant> enseignants
+        @NotNull
+        Enseignant enseignant
 ) {
 
 }

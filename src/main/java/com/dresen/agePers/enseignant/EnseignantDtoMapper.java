@@ -36,11 +36,7 @@ public class EnseignantDtoMapper implements Function<Enseignant, EnseignantDto> 
                 enseignant.getGrade(),
                 enseignant.getFormation(),
                 enseignant.getDiscipline(),
-                enseignant.getDiplomes(),
-                enseignant.getAffectations(),
-                enseignant.getMissions(),
-                enseignant.getAbsences(),
-                enseignant.getConges()
+                enseignant.getDiplomes()
         );
 
     }
