@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
-public class PosteService implements IPosteService {
+public class PosteService implements PosteIService {
 
     private final PosteRepository repository;
     private final PosteDtoMapper  dtoMapper;

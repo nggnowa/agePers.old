@@ -2,7 +2,7 @@ package com.dresen.agePers.discipline;
 
 import java.util.List;
 
-public interface IDisciplineService {
+public interface DisciplineIService {
 
     DisciplineDto createDiscipline(Long formationId, DisciplineDto disciplineDto);
 

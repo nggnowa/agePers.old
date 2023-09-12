@@ -2,7 +2,7 @@ package com.dresen.agePers.absence;
 
 import java.util.List;
 
-public interface IAbsenceService {
+public interface AbsenceIService {
 
     AbsenceDto createAbsence(Long enseignantId, AbsenceDto absenceDto);
 

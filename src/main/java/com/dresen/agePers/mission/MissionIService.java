@@ -2,7 +2,7 @@ package com.dresen.agePers.mission;
 
 import java.util.List;
 
-public interface IMissionService {
+public interface MissionIService {
 
     MissionDto createMission(Long enseignantId, MissionDto missionDto);
 

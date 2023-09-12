@@ -1,5 +1,8 @@
 package com.dresen.agePers.etablissement;
 
+import com.dresen.agePers.etablissement.enums.Categorie;
+import com.dresen.agePers.etablissement.enums.OrdreEnseignement;
+import com.dresen.agePers.etablissement.enums.SousSysteme;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

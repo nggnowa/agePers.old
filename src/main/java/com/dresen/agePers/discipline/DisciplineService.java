@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
-public class DisciplineService implements IDisciplineService {
+public class DisciplineService implements DisciplineIService {
 
     private final FormationRepository  formationRepository;
     private final DisciplineRepository repository;
@@ -90,7 +90,7 @@ public class DisciplineService implements IDisciplineService {
         }
 
         if (disciplineDto.formation() != null) {
-            
+
             if (!discipline.getFormation().equals(disciplineDto.formation())) {
 
                 discipline.setFormation(disciplineDto.formation());

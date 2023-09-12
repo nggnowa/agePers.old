@@ -14,7 +14,7 @@ import com.dresen.agePers.region.Region;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface IEnseignantService {
+public interface EnseignantIService {
 
     EnseignantDto createEnseignant(EnseignantDto enseignantDto);
 

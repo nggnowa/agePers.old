@@ -2,7 +2,7 @@ package com.dresen.agePers.grade;
 
 import java.util.List;
 
-public interface IGradeService {
+public interface GradeIService {
 
     List<GradeDto> getAllGrades();
 

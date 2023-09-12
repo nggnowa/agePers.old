@@ -1,5 +1,6 @@
-package com.dresen.agePers.region;
+package com.dresen.agePers.region.search;
 
+import com.dresen.agePers.region.Region;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;

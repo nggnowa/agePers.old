@@ -2,7 +2,7 @@ package com.dresen.agePers.region;
 
 import java.util.List;
 
-public interface IRegionService {
+public interface RegionIService {
 
     RegionDto createRegion(RegionDto regionDto);
 

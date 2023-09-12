@@ -1,4 +1,4 @@
-package com.dresen.agePers.poste;
+package com.dresen.agePers.poste.enums;
 
 public enum Rang {
     DIRECTEUR_ADJOINT,

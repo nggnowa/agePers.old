@@ -1,6 +1,9 @@
 package com.dresen.agePers.etablissement;
 
 import com.dresen.agePers.arrondissement.Arrondissement;
+import com.dresen.agePers.etablissement.enums.Categorie;
+import com.dresen.agePers.etablissement.enums.OrdreEnseignement;
+import com.dresen.agePers.etablissement.enums.SousSysteme;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

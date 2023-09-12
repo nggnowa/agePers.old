@@ -1,5 +1,8 @@
 package com.dresen.agePers.etablissement;
 
+import com.dresen.agePers.etablissement.enums.Categorie;
+import com.dresen.agePers.etablissement.enums.OrdreEnseignement;
+import com.dresen.agePers.etablissement.enums.SousSysteme;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -113,7 +113,7 @@ public class Enseignant {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Ethnie ethnie;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "grade_id")
     private Grade grade;
 
@@ -128,10 +128,7 @@ public class Enseignant {
     private Discipline discipline;
 
     @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
+            cascade = CascadeType.MERGE)
     @JoinTable(
             name = "enseignant_diplomes",
             joinColumns = {@JoinColumn(name = "enseignant_id")},

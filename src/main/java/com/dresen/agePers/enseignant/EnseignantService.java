@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
-public class EnseignantService implements IEnseignantService {
+public class EnseignantService implements EnseignantIService {
 
     private final EnseignantDtoMapper dtoMapper;
 

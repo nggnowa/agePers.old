@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
-public class RegionService implements IRegionService {
+public class RegionService implements RegionIService {
 
     private final RegionRepository repository;
 

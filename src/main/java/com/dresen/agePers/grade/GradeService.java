@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
-public class GradeService implements IGradeService {
+public class GradeService implements GradeIService {
 
     private final GradeRepository repository;
     private final GradeDtoMapper  dtoMapper;

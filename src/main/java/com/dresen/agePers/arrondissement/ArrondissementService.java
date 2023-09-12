@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
-public class ArrondissementService implements IArrondissementService {
+public class ArrondissementService implements ArrondissementIService {
 
     private final DepartementRepository    departementRepository;
     private final ArrondissementRepository repository;

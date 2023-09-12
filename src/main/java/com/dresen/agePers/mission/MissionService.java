@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
-public class MissionService implements IMissionService {
+public class MissionService implements MissionIService {
 
     private final MissionRepository repository;
 

@@ -1,5 +1,6 @@
 package com.dresen.agePers.affectation;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +16,16 @@ public class AffectationController {
     private final AffectationService service;
 
     @PostMapping("/enseignants/{enseignantId}/etablissements/{etablissementId}/affectations")
-    public ResponseEntity<AffectationDto> createAffectation(@PathVariable Long enseigantId, @PathVariable Long etablissementId, @RequestBody AffectationDto affectationDto) {
+    public ResponseEntity<AffectationDto> createAffectation(@PathVariable Long enseignantId, @PathVariable Long etablissementId, @RequestBody @Valid AffectationDto affectationDto) {
 
-        AffectationDto saved = service.createAffectation(enseigantId, etablissementId, affectationDto);
+        AffectationDto saved = service.createAffectation(enseignantId, etablissementId, affectationDto);
+        return new ResponseEntity<>(saved, CREATED);
+    }
+
+    @PostMapping("/enseignants/{enseignantId}/affectations")
+    public ResponseEntity<AffectationDto> createAffectation(@PathVariable Long enseignantId, @RequestBody @Valid AffectationDto affectationDto) {
+
+        AffectationDto saved = service.createAffectation(enseignantId, affectationDto);
         return new ResponseEntity<>(saved, CREATED);
     }
 

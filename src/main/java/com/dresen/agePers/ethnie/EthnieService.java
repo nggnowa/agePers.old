@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
-public class EthnieService implements IEthnieService {
+public class EthnieService implements EthnieIService {
 
     private final EthnieRepository repository;
     private final EthnieDtoMapper  dtoMapper;

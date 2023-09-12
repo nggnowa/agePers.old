@@ -1,5 +1,6 @@
 package com.dresen.agePers.poste;
 
+import com.dresen.agePers.poste.enums.Rang;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 

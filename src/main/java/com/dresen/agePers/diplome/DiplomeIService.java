@@ -2,7 +2,7 @@ package com.dresen.agePers.diplome;
 
 import java.util.List;
 
-public interface IDiplomeService {
+public interface DiplomeIService {
 
     DiplomeDto createDiplome(DiplomeDto diplomeDto);
 

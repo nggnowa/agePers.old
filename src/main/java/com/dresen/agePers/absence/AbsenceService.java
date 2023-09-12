@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
-public class AbsenceService implements IAbsenceService {
+public class AbsenceService implements AbsenceIService {
 
     private final EnseignantRepository enseignantRepository;
 

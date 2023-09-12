@@ -1,6 +1,7 @@
 package com.dresen.agePers.grade;
 
 
+import com.dresen.agePers.grade.enums.IntituleGrade;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

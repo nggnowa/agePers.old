@@ -2,7 +2,7 @@ package com.dresen.agePers.arrondissement;
 
 import java.util.List;
 
-public interface IArrondissementService {
+public interface ArrondissementIService {
 
     ArrondissementDto createArrondissement(Long departementId, ArrondissementDto arrondissementDto);
 

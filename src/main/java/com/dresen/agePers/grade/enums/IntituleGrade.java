@@ -1,4 +1,4 @@
-package com.dresen.agePers.grade;
+package com.dresen.agePers.grade.enums;
 
 public enum IntituleGrade {
     PLEG,

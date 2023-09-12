@@ -16,7 +16,7 @@ public record MissionDto(
         @Future
         LocalDate dateRetour,
         Integer duree, //en nombre de jours
-        @NotNull
+
         Enseignant enseignant
 ) {
 

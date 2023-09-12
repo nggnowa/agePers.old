@@ -2,9 +2,11 @@ package com.dresen.agePers.affectation;
 
 import java.util.List;
 
-public interface IAffectationService {
+public interface AffectationIService {
 
     AffectationDto createAffectation(Long enseignantId, Long etablissementId, AffectationDto affectationDto);
+
+    AffectationDto createAffectation(Long enseignantId, AffectationDto affectationDto);
 
     List<AffectationDto> getAllAffectations();
 

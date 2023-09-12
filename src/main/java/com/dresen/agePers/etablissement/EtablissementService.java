@@ -2,6 +2,9 @@ package com.dresen.agePers.etablissement;
 
 import com.dresen.agePers.arrondissement.Arrondissement;
 import com.dresen.agePers.arrondissement.ArrondissementRepository;
+import com.dresen.agePers.etablissement.enums.Categorie;
+import com.dresen.agePers.etablissement.enums.OrdreEnseignement;
+import com.dresen.agePers.etablissement.enums.SousSysteme;
 import com.dresen.agePers.exceptioin.ResourceNotFoundException;
 import com.dresen.agePers.exceptioin.ResourceTakenException;
 import lombok.AllArgsConstructor;
@@ -14,7 +17,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
-public class EtablissementService implements IEtablissementService {
+public class EtablissementService implements EtablissementIService {
 
     private final EtablissementRepository  repository;
     private final EtablissementDtoMapper   dtoMapper;

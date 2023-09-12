@@ -48,12 +48,13 @@ public class Affectation {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Enseignant enseignant;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "poste_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Poste poste;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "etablissement_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "etablissement_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Etablissement etablissement;
 

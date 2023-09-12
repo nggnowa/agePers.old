@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
-public class DiplomeService implements IDiplomeService {
+public class DiplomeService implements DiplomeIService {
 
     private final EnseignantRepository enseignantRepository;
 

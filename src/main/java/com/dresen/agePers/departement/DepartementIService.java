@@ -2,7 +2,7 @@ package com.dresen.agePers.departement;
 
 import java.util.List;
 
-public interface IDepartementService {
+public interface DepartementIService {
 
     DepartementDto createDepartement(Long regionId, DepartementDto departementDto);
 

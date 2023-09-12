@@ -30,10 +30,7 @@ public class Diplome {
 
     @ManyToMany(
             fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            },
+            cascade = CascadeType.MERGE,
             mappedBy = "diplomes")
     @JsonIgnore
     private List<Enseignant> enseignants;

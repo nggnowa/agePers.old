@@ -1,8 +1,12 @@
 package com.dresen.agePers.etablissement;
 
+import com.dresen.agePers.etablissement.enums.Categorie;
+import com.dresen.agePers.etablissement.enums.OrdreEnseignement;
+import com.dresen.agePers.etablissement.enums.SousSysteme;
+
 import java.util.List;
 
-public interface IEtablissementService {
+public interface EtablissementIService {
 
     EtablissementDto createEtablissement(EtablissementDto etablissementDto);
 

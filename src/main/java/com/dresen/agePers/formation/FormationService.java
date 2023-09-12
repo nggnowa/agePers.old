@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
-public class FormationService implements IFormationService {
+public class FormationService implements FormationIService {
 
     private final FormationRepository repository;
     private final FormationDtoMapper  dtoMapper;

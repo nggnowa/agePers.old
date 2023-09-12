@@ -18,11 +18,9 @@ public record AffectationDto(
         LocalDate datePriseService,
         @NotNull
         DelegationEN delegation,
-        @NotNull
         Enseignant enseignant,
         @NotNull
         Poste poste,
-        @NotNull
         Etablissement etablissement,
         Integer anciennete
 ) {

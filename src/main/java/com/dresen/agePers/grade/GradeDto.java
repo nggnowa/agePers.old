@@ -1,5 +1,6 @@
 package com.dresen.agePers.grade;
 
+import com.dresen.agePers.grade.enums.IntituleGrade;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 

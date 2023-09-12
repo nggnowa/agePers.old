@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
-public class AffectationService implements IAffectationService {
+public class AffectationService implements AffectationIService {
 
     private final AffectationRepository   repository;
     private final AffectationDtoMapper    dtoMapper;
@@ -25,15 +25,39 @@ public class AffectationService implements IAffectationService {
     public AffectationDto createAffectation(Long enseignantId, Long etablissementId, AffectationDto affectationDto) {
 
         Optional<Enseignant> enseignantById = enseignantRepository.findById(enseignantId);
-
         if (enseignantById.isEmpty()) {
             throw new ResourceNotFoundException(Enseignant.class.getSimpleName(), "id", enseignantId);
         }
 
         Optional<Etablissement> etablissementById = etablissementRepository.findById(etablissementId);
-
         if (etablissementById.isEmpty()) {
             throw new ResourceNotFoundException(Etablissement.class.getSimpleName(), "id", etablissementId);
+        }
+
+        Affectation saved = repository.save(
+                new Affectation(
+                        affectationDto.id(),
+                        affectationDto.referenceAffectation(),
+                        affectationDto.dateAffectation(),
+                        affectationDto.datePriseService(),
+                        affectationDto.delegation(),
+                        affectationDto.anciennete(),
+                        enseignantById.get(),
+                        affectationDto.poste(),
+                        etablissementById.get()
+                )
+        );
+
+        return dtoMapper.apply(saved);
+    }
+
+    @Override
+    public AffectationDto createAffectation(Long enseignantId, AffectationDto affectationDto) {
+
+        Optional<Enseignant> enseignantById = enseignantRepository.findById(enseignantId);
+
+        if (enseignantById.isEmpty()) {
+            throw new ResourceNotFoundException(Enseignant.class.getSimpleName(), "id", enseignantId);
         }
 
         Affectation saved = repository.save(
